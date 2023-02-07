@@ -12,9 +12,10 @@
 
 import runServer from './server/server';
 import { BasicStrategy } from './strategy/BasicStrategy';
+import { SuperiorStrategy } from './strategy/SuperiorStrategy';
 import { GameState, InfoResponse, MoveResponse } from './types/types';
 
-const allroundStrategy = new BasicStrategy();
+const allroundStrategy = new SuperiorStrategy();
 
 // info is called when you create your Battlesnake on play.battlesnake.com
 // and controls your Battlesnake's appearance
