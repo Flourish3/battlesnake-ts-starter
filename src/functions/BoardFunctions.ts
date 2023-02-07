@@ -1,5 +1,5 @@
 import { Direction } from "../types/strategy";
-import { Battlesnake, Board, Coord } from "../types/types";
+import { Battlesnake, Board, Coord, GameState} from "../types/types";
 
 export function coordInDirection(start: Coord, direction: Direction): Coord {
   switch (direction) {
@@ -37,4 +37,19 @@ export function closestFood(head: Coord, board: Board): Coord | null {
 
 export function distance(coord1: Coord, coord2: Coord): number {
   return Math.abs(coord1.x - coord2.x) + Math.abs(coord2.y - coord1.y);
+}
+
+export function isNextToBiggerSnakeHead(coord: Coord, gamestate: GameState, snakeLength: number): boolean {
+  const coords = [{x: coord.x+1, y: coord.y}, {x: coord.x, y: coord.y+1}, {x: coord.x-1, y: coord.y}, {x: coord.x, y: coord.y-1}]
+  return coords.some((nextCoord, Coord) => {
+    if (sameCoord(nextCoord, gamestate.you.head)) return false
+    return gamestate.board.snakes.some((snake: Battlesnake) => {
+      return isBiggerSnakeHead({ x: nextCoord.x, y: nextCoord.y }, snake, snakeLength)
+    })
+  })
+}
+
+export function isBiggerSnakeHead(coord: Coord, snake: Battlesnake, snakeLength: number): boolean {
+
+  return sameCoord(snake.head, coord) && snake.length >= snakeLength;
 }

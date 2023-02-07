@@ -1,5 +1,5 @@
 import { dir } from "console";
-import { coordInDirection, isOutside, isSnakePart, closestFood } from "../functions/BoardFunctions";
+import { coordInDirection, isOutside, isSnakePart, closestFood, isNextToBiggerSnakeHead } from "../functions/BoardFunctions";
 import { boardState } from "../tests/GameStateGenerator";
 import { Direction, Outcome } from "../types/strategy";
 import { DirectionResult, Strategy } from "../types/strategyTypes";
@@ -36,7 +36,8 @@ export class SuperiorStrategy implements Strategy {
     const possibleDirections = [horDirection, vertDirection]
         .filter((direction) => !!direction)
         .filter((direction) => !isSnakePart(coordInDirection(head, direction!), gameState.board) && 
-            !isOutside(coordInDirection(head, direction!), gameState.board)
+            !isOutside(coordInDirection(head, direction!), gameState.board) &&
+            !isNextToBiggerSnakeHead(coordInDirection(head, direction!), gameState, gameState.you.length)
         );
 
     console.log('possible directions: %s', possibleDirections);
