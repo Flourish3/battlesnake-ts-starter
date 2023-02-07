@@ -11,7 +11,7 @@ export class SuperiorStrategy implements Strategy {
     const head = gameState.you.body[0];
 
     const closestFoodCoord = closestFood(head, gameState.board);
-    
+    console.log('Closest food: %s', closestFoodCoord);
     //Figure out direction to move to food
     let horDirection;
 
@@ -31,20 +31,15 @@ export class SuperiorStrategy implements Strategy {
     } else {
         vertDirection = Direction.UP;
     }
+    console.log('hor: %s, vert: %s', horDirection, vertDirection);
 
     const possibleDirections = [horDirection, vertDirection]
         .filter((direction) => !!direction)
-        .filter((direction) => isSnakePart(coordInDirection(head, direction!), gameState.board) && 
+        .filter((direction) => !isSnakePart(coordInDirection(head, direction!), gameState.board) && 
             !isOutside(coordInDirection(head, direction!), gameState.board)
         );
 
     console.log('possible directions: %s', possibleDirections);
-
-
-
-
-
-
 
     return { move: possibleDirections[0]!};
 
